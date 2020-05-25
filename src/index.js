@@ -1,6 +1,7 @@
 import Layer from './layer.js';
 import eqMixin from './layer/eq.js';
 import imgMixin from './layer/img.js';
+import wormsMixin from './layer/worms.js';
 import spinMixin from './layer/spin.js';
 
 const audioFile = '../audio/lozsmall';
@@ -30,6 +31,7 @@ const sketch = (processing) => {
 
     layers.push(new Layer(processing, { ...imgMixin }));
     layers.push(new Layer(processing, { ...spinMixin }));
+    layers.push(new Layer(processing, { ...wormsMixin }));
     layers.push(new Layer(processing, { ...eqMixin }));
 
     layers.forEach((layer) => {
@@ -65,7 +67,7 @@ const sketch = (processing) => {
     // }
   };
 
-  processing.keyPressed = () => {
+  processing.keyTyped = () => {
     if (ready()) {
       if (48 <= processing.keyCode <= 57) {
         const layerNum = processing.keyCode - 48;
@@ -85,7 +87,7 @@ const sketch = (processing) => {
           }
           break;
         default:
-          layers.forEach((layer) => layer.keyPressed());
+          layers.forEach((layer) => layer.keyTyped());
       }
     }
   };

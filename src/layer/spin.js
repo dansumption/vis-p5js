@@ -41,7 +41,7 @@ const spin = {
     this.layer.translate(noiseX, noiseY);
     this.layer.image(rotated, 0, 0);
   },
-  keyPressed: function(){
+  keyTyped: function(){
     const processing = this.processing;
     switch (processing.keyCode) {
       case 188:
