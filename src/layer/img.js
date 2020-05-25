@@ -1,4 +1,5 @@
 const img = {
+  name: 'img',
   preload() {
     this.images = [];
     this.currentImage;
