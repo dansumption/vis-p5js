@@ -3,6 +3,7 @@ import eqMixin from './layer/eq.js';
 import imgMixin from './layer/img.js';
 import wormsMixin from './layer/worms.js';
 import spinMixin from './layer/spin.js';
+import threadsMixin from './layer/threads.js';
 
 const audioFile = '../audio/lozsmall';
 const audioFormat = 'wav';
@@ -29,8 +30,9 @@ const sketch = (processing) => {
       console.log('sound loaded');
     });
 
-    layers.push(new Layer(processing, { ...imgMixin }));
-    layers.push(new Layer(processing, { ...spinMixin }));
+    // layers.push(new Layer(processing, { ...imgMixin }));
+    // layers.push(new Layer(processing, { ...spinMixin }));
+    layers.push(new Layer(processing, { ...threadsMixin }));
     layers.push(new Layer(processing, { ...wormsMixin }));
     layers.push(new Layer(processing, { ...eqMixin }));
 
@@ -50,6 +52,7 @@ const sketch = (processing) => {
     layers.forEach((layer) => {
       layer.setup();
     });
+    console.log("setup complete")
   };
 
   processing.draw = () => {

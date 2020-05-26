@@ -1,3 +1,4 @@
+import colorUtils from '../colors.js';
 const worms = {
   setup: function () {
     const numCells = 50;
@@ -5,13 +6,8 @@ const worms = {
     for (let i = 0; i < numCells; i++) {
       this.cells.push(
         this.spawnParticle({
-          length: Math.random() * 50 + 5,
-          color: this.processing.color(
-            Math.random() * 256,
-            Math.random() * 256,
-            Math.random() * 256,
-            Math.random() * 56 + 200
-          ),
+          length: Math.random() * 10 + 2,
+          color: colorUtils.getBlackOrWhite(this.processing, Math.random() * 50 + 100),
         })
       );
     }
@@ -20,9 +16,9 @@ const worms = {
     this.layer.clear();
     const energy = fft.getEnergy('bass', 'mid');
     this.cells.forEach((cell) => {
-      cell.lastVector = cell.vector;
+      cell.lastVector = cell.vector.copy();
       this.moveParticle(cell);
-      cell.vector.cross(p5.Vector.random2D());
+      cell.vector.add(p5.Vector.random2D().mult(0.5));
       this.processing.strokeWeight(10);
       this.processing.strokeCap(this.processing.ROUND);
       this.processing.stroke(cell.color);

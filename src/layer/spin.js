@@ -1,8 +1,9 @@
+const name = 'spin';
+let threshold = 230;
+
+
 const spin = {
-  name: 'spin',
-  threshold: 230,
   setup: function () {
-    this.threshold = 230;
     const p5 = this.processing;
     this.layer.blendMode(p5.SOFT_LIGHT);
     this.layer.stroke(p5.color(192, 70, 0));
@@ -27,7 +28,7 @@ const spin = {
     const rotated = Object.create(this.baseLayer);
     this.layer.rotate(Math.random() * 10);
     let blend;
-      if (energy < this.threshold)
+      if (energy < threshold)
       {
         blend = p5.REMOVE;
         // this.layer.tint(192, 70, 0)
@@ -45,13 +46,13 @@ const spin = {
     const processing = this.processing;
     switch (processing.keyCode) {
       case 188:
-        this.threshold = Math.max(this.threshold - 1, 0);
+        threshold = Math.max(threshold - 1, 0);
         break;
       case 190:
-        this.threshold = Math.min(this.threshold + 1, 255);
+        threshold = Math.min(threshold + 1, 255);
         break;
     }
-    console.log(this.threshold);
+    console.log("spin threshold:",threshold);
   },
   baseLayer: null
 }

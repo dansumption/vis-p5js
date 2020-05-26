@@ -7,7 +7,7 @@ const eq = {
     const rheight = Math.round(p5.height / numBands);
     this.layer.noStroke();
     for (let i = 0; i < numBands; i++) {
-      this.layer.fill (isPeak ? p5.color(255,0,0) : p5.color(0, 255, 0));
+      this.layer.fill (isPeak ? p5.color(255) : p5.color(0));
       const level = spectrum[i];
       const prevLevel = i == 0 ? level : spectrum[i - 1];
       const nextLevel = i == numBands - 1 ? level : spectrum[i + 1];
