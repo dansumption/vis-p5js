@@ -1,7 +1,24 @@
+import particle from './particle.js';
 const noop = () => {};
 
 class Layer {
-  constructor(processing, { preload = noop, setup = noop, draw = noop, keyTyped = noop, ready = () => true, ...rest }) {
+  constructor(
+    processing,
+    {
+      showPercentage = 100,
+      hidePercentage = 0,
+      visible = true,
+      preload = noop,
+      setup = noop,
+      draw = noop,
+      keyTyped = noop,
+      ready = () => true,
+      ...rest
+    }
+  ) {
+    Object.assign(this, particle);
+    Object.assign(this, { ...rest });
+    this.visible = visible;
     this.processing = processing;
     this.layer = processing.createGraphics(processing.width, processing.height);
     this.preload = preload;
@@ -9,27 +26,24 @@ class Layer {
     this.draw = draw;
     this.keyTyped = keyTyped;
     this.ready = ready;
-    this.moveParticle = (particle) => {
-      particle.x += particle.vector.x;
-      particle.y += particle.vector.y;
-      if (particle.x > this.processing.width || particle.x < 0) {
-        particle.vector.x = -particle.vector.x;
-        particle.x += particle.vector.x;
+    this.showPercentage = showPercentage;
+    this.hidePercentage = hidePercentage;
+    this.showHide = function () {
+      switch (this.visible) {
+        case true:
+          if (Math.random() * 100 < this.hidePercentage) {
+            console.log('hiding', this.name);
+            this.visible = false;
+          }
+          break;
+        case false:
+          if (Math.random() * 100 < this.showPercentage) {
+            console.log('showing', this.name);
+            this.visible = true;
+          }
+          break;
       }
-      if (particle.y > this.processing.height || particle.y < 0) {
-        particle.vector.y = -particle.vector.y;
-        particle.y += particle.vector.y;
-      }
-    }
-    this.spawnParticle = ({ ...rest }) => {
-      const particle = {
-        x: Math.random() * this.processing.width,
-        y: Math.random() * this.processing.height,
-        vector: p5.Vector.random2D(),
-        ...rest
-      }
-      return particle;
-    }
+    };
   }
 }
 

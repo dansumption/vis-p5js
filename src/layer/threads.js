@@ -1,5 +1,4 @@
 import colorUtils from '../colors.js';
-const name = 'threads';
 
 const threads = {
   setup: function () {

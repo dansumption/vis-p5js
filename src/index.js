@@ -31,10 +31,26 @@ const sketch = (processing) => {
     });
 
     // layers.push(new Layer(processing, { ...imgMixin }));
-    // layers.push(new Layer(processing, { ...spinMixin }));
-    layers.push(new Layer(processing, { ...threadsMixin }));
-    layers.push(new Layer(processing, { ...wormsMixin }));
-    layers.push(new Layer(processing, { ...eqMixin }));
+    layers.push(new Layer(processing, { name: 'threads', ...threadsMixin }));
+    layers.push(new Layer(processing, { name: 'worms', ...wormsMixin }));
+    layers.push(
+      new Layer(processing, {
+        name: 'spin',
+        visible: false,
+        showPercentage: 1,
+        hidePercentage: 0.4,
+        ...spinMixin,
+      })
+    );
+    layers.push(
+      new Layer(processing, {
+        name: 'eq',
+        visible: false,
+        showPercentage: 0.1,
+        hidePercentage: 0.1,
+        ...eqMixin,
+      })
+    );
 
     layers.forEach((layer) => {
       layer.preload();
@@ -52,7 +68,7 @@ const sketch = (processing) => {
     layers.forEach((layer) => {
       layer.setup();
     });
-    console.log("setup complete")
+    console.log('setup complete');
   };
 
   processing.draw = () => {
@@ -61,8 +77,12 @@ const sketch = (processing) => {
       let spectrum = fft.analyze();
       peakDetect.update(fft);
       layers.forEach((layer) => {
-        layer.draw(spectrum, peakDetect.isDetected, fft);
-        processing.image(layer.layer, 0, 0);
+        layer.showHide();
+        // console.log(layer.name , layer.visible);
+        if (layer.visible) {
+          layer.draw(spectrum, peakDetect.isDetected, fft);
+          processing.image(layer.layer, 0, 0);
+        }
       });
     }
     // if (processing.frameRate() < 20) {

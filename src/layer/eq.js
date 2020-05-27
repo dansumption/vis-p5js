@@ -1,5 +1,4 @@
 const eq = {
-  name: 'eq',
   draw(spectrum, isPeak) {
     const p5 = this.processing;
     this.layer.clear();
