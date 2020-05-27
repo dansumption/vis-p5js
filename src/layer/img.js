@@ -9,9 +9,10 @@ const img = {
     this.max = this.numImages;
 
     for (let i = 0; i < this.numImages; i++) {
-      const imgNumber = Math.floor(
-        this.processing.random(this.min, this.max + 1)
-      );
+      const imgNumber = i + 1;
+      //   Math.floor(
+      //   this.processing.random(this.min, this.max + 1)
+      // );
       // const imgString = this.processing.nf(imgNumber, 1);
       const imgName = '../img/set1/image_' + imgNumber + '.jpg';
       this.images[i] = this.processing.loadImage(imgName, () => {
@@ -43,19 +44,18 @@ const img = {
         this.processing.width,
         this.processing.height
       );
-      this.layer.image(this.currentImage, this.processing.width, this.processing.height);
     },
 
   draw(spectrum, isPeak, fft) {
     let reRender = false;
-    if (!this.currentImage || Math.random() > 0.95) {
+    if (!this.currentImage || Math.random() > 0.97) {
       this.setImage();
       reRender = true;
-    } else if (Math.random() > 0.3) {
+    } else if (Math.random() > 0.4) {
       this.glitch = new Glitch(this.processing, this.layer);
       reRender = true;
     }
-      if (reRender && this.currentImage.width && this.currentImage.height) {
+      if (reRender && this.currentImage.width) {
         this.glitch = new Glitch(this.processing, this.currentImage);
         // this.layer.image(this.currentImage, 0, 0, this.processing.width, this.processing.height);
         this.layer.clear();
