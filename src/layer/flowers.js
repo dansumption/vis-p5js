@@ -5,14 +5,15 @@ const numCells = 32;
 const flowers = {
   setup: function () {
     this.cells = [];
+    const color = colorUtils.getBlackOrWhite(this.processing, 2)
     for (let i = 0; i < numCells; i++) {
       const centreSize = this.processing.width / 10; // Math.random() * 80;
       const outerSize = this.processing.width; // centreSize + Math.random() * 80 + 10;
       this.cells.push(
         this.spawnParticle({
           size: Math.random() * 10,
-          centreColor: this.processing.color(0), // colorUtils.getBlackOrWhite(this.processing, 10),
-          petalColor: this.processing.color(0), // ccolorUtils.getBlackOrWhite(this.processing, 10),
+          centreColor: color,
+          petalColor: color,
           centreSize,
           outerSize,
           petals: Math.random * 5 + 3,

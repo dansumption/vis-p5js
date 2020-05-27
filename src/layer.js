@@ -7,6 +7,7 @@ class Layer {
     {
       showPercentage = 100,
       hidePercentage = 0,
+      beatMultiplier = 1,
       visible = true,
       renderHidden = false,
       preload = noop,
@@ -29,7 +30,7 @@ class Layer {
     this.ready = ready;
     this.showPercentage = showPercentage;
     this.hidePercentage = hidePercentage;
-    this.showHide = function () {
+    this.showHide = function (isBeat) {
       switch (this.visible) {
         case true:
           if (Math.random() * 100 < this.hidePercentage) {
@@ -38,7 +39,7 @@ class Layer {
           }
           break;
         case false:
-          if (Math.random() * 100 < this.showPercentage) {
+          if (Math.random() * 100 < this.showPercentage * (isBeat ? beatMultiplier : 1)) {
             console.log('showing', this.name);
             this.visible = true;
           }

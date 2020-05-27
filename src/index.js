@@ -46,8 +46,9 @@ const sketch = (processing) => {
       new Layer(processing, {
         name: 'img2',
         visible: false,
-        showPercentage: 1,
+        showPercentage: 0.1,
         hidePercentage: 35,
+        beatMultiplier: 900,
         ...imgMixin,
       })
     );
@@ -100,7 +101,7 @@ const sketch = (processing) => {
       let spectrum = fft.analyze();
       peakDetect.update(fft);
       layers.forEach((layer) => {
-        layer.showHide();
+        layer.showHide(peakDetect.isDetected);
         // console.log(layer.name , layer.visible);
         if (layer.visible || layer.renderHidden) {
           layer.draw(spectrum, peakDetect.isDetected, fft);
