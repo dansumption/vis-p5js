@@ -1,5 +1,6 @@
 import Layer from './layer.js';
 import eqMixin from './layer/eq.js';
+import flowersMixin from './layer/flowers.js';
 import imgMixin from './layer/img.js';
 import wormsMixin from './layer/worms.js';
 import spinMixin from './layer/spin.js';
@@ -7,8 +8,51 @@ import threadsMixin from './layer/threads.js';
 
 const audioFile = '../audio/lozsmall';
 const audioFormat = 'wav';
-
 const sketch = (processing) => {
+  const setupLayers = function (layers) {
+    layers.push(new Layer(processing, { name: 'blobs', ...flowersMixin }));
+    layers.push(new Layer(processing, { name: 'img', ...imgMixin }));
+    layers.push(new Layer(processing, { name: 'threads', ...threadsMixin }));
+    layers.push(
+      new Layer(processing, {
+        name: 'worms',
+        visible: true,
+        showPercentage: 10,
+        hidePercentage: 2,
+        ...wormsMixin,
+      })
+    );
+    layers.push(
+      new Layer(processing, {
+        name: 'spin',
+        visible: false,
+        showPercentage: 1,
+        hidePercentage: 1,
+        renderHidden: true,
+        ...spinMixin,
+      })
+    );
+    layers.push(new Layer(processing, { ...flowersMixin }));
+    layers.push(
+      new Layer(processing, {
+        name: 'eq',
+        visible: false,
+        showPercentage: 2,
+        hidePercentage: 2,
+        ...eqMixin,
+      })
+    );
+    layers.push(
+      new Layer(processing, {
+        name: 'img2',
+        visible: false,
+        showPercentage: 1,
+        hidePercentage: 35,
+        ...imgMixin,
+      })
+    );
+  };
+
   let fft;
   let peakDetect;
   let audio;
@@ -29,32 +73,7 @@ const sketch = (processing) => {
     audio = processing.loadSound(audioFile, () => {
       console.log('sound loaded');
     });
-
-    layers.push(new Layer(processing, { name: 'threads', ...threadsMixin }));
-    layers.push(new Layer(processing, {
-      name: 'worms',
-    visible: true, showPercentage: 10, hidePercentage: 2,  ...wormsMixin
-    }));
-    layers.push(
-      new Layer(processing, {
-        name: 'spin',
-        visible: false,
-        showPercentage: 1,
-        hidePercentage: 1,
-        renderHidden: true,
-        ...spinMixin,
-      })
-    );
-    layers.push(
-      new Layer(processing, {
-        name: 'eq',
-        visible: false,
-        showPercentage: 2,
-        hidePercentage: 2,
-        ...eqMixin,
-      })
-    );
-    layers.push(new Layer(processing, { ...imgMixin }));
+    setupLayers(layers);
 
     layers.forEach((layer) => {
       layer.preload();
