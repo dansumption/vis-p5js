@@ -7,8 +7,8 @@ const threads = {
     for (let i = 0; i < numCells; i++) {
       this.cells.push(
         this.spawnParticle({
-          size: Math.random() * 10,
-          color: colorUtils.alternate(this.processing, i, 3)
+          size: Math.random() * 70,
+          color: colorUtils.alternate(this.processing, i, 11)
         })
       );
     }

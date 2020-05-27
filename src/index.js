@@ -8,6 +8,8 @@ import threadsMixin from './layer/threads.js';
 
 const audioFile = '../audio/Hierophant';
 const audioFormat = 'mp3';
+let counter;
+
 const sketch = (processing) => {
   const setupLayers = function (layers) {
     // layers.push(new Layer(processing, { name: 'blobs', ...flowersMixin }));
@@ -27,7 +29,8 @@ const sketch = (processing) => {
         name: 'spin',
         visible: false,
         showPercentage: 1,
-        hidePercentage: 1,
+        hidePercentage: 2,
+        beatMultiplier: 3,
         renderHidden: true,
         ...spinMixin,
       })
@@ -38,7 +41,7 @@ const sketch = (processing) => {
         name: 'img2',
         visible: false,
         showPercentage: 0.1,
-        hidePercentage: 35,
+        hidePercentage: 30,
         beatMultiplier: 900,
         ...imgMixin,
       })
@@ -83,6 +86,8 @@ const sketch = (processing) => {
   };
 
   processing.setup = () => {
+    counter = document.createTextNode('...'); // Create a text node
+    // document.body.appendChild(counter);
     processing.createCanvas(1280, 720);
     processing.frameRate(60);
     processing.background(0);
@@ -99,6 +104,13 @@ const sketch = (processing) => {
   processing.draw = () => {
     processing.background(0);
     if (isPlaying()) {
+      // counter.innerText = '> ' + audio.currentTime() + " / " + audio.duration();
+      console.log(
+        '> ' +
+          processing.nf(audio.currentTime(), 4, 0) +
+          ' / ' +
+          processing.nf(audio.duration(), 4, 0)
+      );
       let spectrum = fft.analyze();
       peakDetect.update(fft);
       layers.forEach((layer) => {

@@ -34,13 +34,13 @@ class Layer {
       switch (this.visible) {
         case true:
           if (Math.random() * 100 < this.hidePercentage) {
-            console.log('hiding', this.name);
+            // console.log('hiding', this.name);
             this.visible = false;
           }
           break;
         case false:
           if (Math.random() * 100 < this.showPercentage * (isBeat ? beatMultiplier : 1)) {
-            console.log('showing', this.name);
+            // console.log('showing', this.name);
             this.visible = true;
           }
           break;

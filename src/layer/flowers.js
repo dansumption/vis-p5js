@@ -6,7 +6,7 @@ let iteration = 0;
 const flowers = {
   setup: function () {
     this.cells = [];
-    const color = colorUtils.alternate(this.processing, iteration, 3);
+    const color = colorUtils.alternate(this.processing, iteration, 1);
     iteration++;
     for (let i = 0; i < numCells; i++) {
       const centreSize = this.processing.width / 10; // Math.random() * 80;
@@ -30,7 +30,8 @@ const flowers = {
       this.layer.push();
       this.layer.translate(cell.x, cell.y);
 
-      if (cell.size <= cell.outerSize) { // cell.centreSize) {
+      if (cell.size <= cell.outerSize) {
+        // cell.centreSize) {
         this.layer.fill(cell.centreColor);
         this.layer.circle(0, 0, cell.size);
       } else if (cell.size <= cell.outerSize) {
@@ -56,14 +57,16 @@ const flowers = {
         // this.layer.circle(0, 0, cell.centreSize);
       }
       this.layer.pop();
-      cell.size += energy / 128;
-      if (cell.size > this.processing.width) {
-        if (!iteration % 4)
-        this.layer.clear();
+      cell.size += energy / 32;
+      if (cell.size < this.processing.width) {
+        return true;
+      } else {
+        if (iteration % 4 == 0) {
+          this.layer.clear();
+        }
         this.setup();
         return false;
       }
-      return true;
     });
   },
 };
