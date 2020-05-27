@@ -1,11 +1,13 @@
 import colorUtils from '../colors.js';
 
-const numCells = 32;
+const numCells = 6;
+let iteration = 0;
 
 const flowers = {
   setup: function () {
     this.cells = [];
-    const color = colorUtils.getBlackOrWhite(this.processing, 2)
+    const color = colorUtils.alternate(this.processing, iteration, 3);
+    iteration++;
     for (let i = 0; i < numCells; i++) {
       const centreSize = this.processing.width / 10; // Math.random() * 80;
       const outerSize = this.processing.width; // centreSize + Math.random() * 80 + 10;
@@ -55,7 +57,8 @@ const flowers = {
       }
       this.layer.pop();
       cell.size += energy / 128;
-      if (cell.size > this.processing.width / 2) {
+      if (cell.size > this.processing.width) {
+        if (!iteration % 4)
         this.layer.clear();
         this.setup();
         return false;

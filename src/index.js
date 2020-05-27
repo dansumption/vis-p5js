@@ -6,22 +6,22 @@ import wormsMixin from './layer/worms.js';
 import spinMixin from './layer/spin.js';
 import threadsMixin from './layer/threads.js';
 
-const audioFile = '../audio/lozsmall';
-const audioFormat = 'wav';
+const audioFile = '../audio/Hierophant';
+const audioFormat = 'mp3';
 const sketch = (processing) => {
   const setupLayers = function (layers) {
-    layers.push(new Layer(processing, { name: 'blobs', ...flowersMixin }));
-    layers.push(new Layer(processing, { name: 'img', ...imgMixin }));
+    // layers.push(new Layer(processing, { name: 'blobs', ...flowersMixin }));
+    // layers.push(new Layer(processing, { name: 'img', ...imgMixin }));
     layers.push(new Layer(processing, { name: 'threads', ...threadsMixin }));
-    layers.push(
-      new Layer(processing, {
-        name: 'worms',
-        visible: true,
-        showPercentage: 10,
-        hidePercentage: 2,
-        ...wormsMixin,
-      })
-    );
+    // layers.push(
+    //   new Layer(processing, {
+    //     name: 'worms',
+    //     visible: true,
+    //     showPercentage: 10,
+    //     hidePercentage: 2,
+    //     ...wormsMixin,
+    //   })
+    // );
     layers.push(
       new Layer(processing, {
         name: 'spin',
@@ -35,21 +35,22 @@ const sketch = (processing) => {
     layers.push(new Layer(processing, { ...flowersMixin }));
     layers.push(
       new Layer(processing, {
-        name: 'eq',
-        visible: false,
-        showPercentage: 2,
-        hidePercentage: 2,
-        ...eqMixin,
-      })
-    );
-    layers.push(
-      new Layer(processing, {
         name: 'img2',
         visible: false,
         showPercentage: 0.1,
         hidePercentage: 35,
         beatMultiplier: 900,
         ...imgMixin,
+      })
+    );
+    layers.push(
+      new Layer(processing, {
+        name: 'eq',
+        visible: false,
+        showPercentage: 2,
+        hidePercentage: 10,
+        beatMultiplier: 50,
+        ...eqMixin,
       })
     );
   };
@@ -87,7 +88,7 @@ const sketch = (processing) => {
     processing.background(0);
     setupRun = true;
     processing.soundFormats(audioFormat);
-    fft = new p5.FFT(0.8, 256);
+    fft = new p5.FFT(0.8, 64);
     peakDetect = new p5.PeakDetect(20, 20000, 0.18, 1);
     layers.forEach((layer) => {
       layer.setup();

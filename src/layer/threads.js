@@ -2,13 +2,13 @@ import colorUtils from '../colors.js';
 
 const threads = {
   setup: function () {
-    const numCells = 32;
+    const numCells = 4;
     this.cells = [];
     for (let i = 0; i < numCells; i++) {
       this.cells.push(
         this.spawnParticle({
           size: Math.random() * 10,
-          color: colorUtils.getBlackOrWhite(this.processing, 10),
+          color: colorUtils.alternate(this.processing, i, 3)
         })
       );
     }
