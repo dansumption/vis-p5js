@@ -8,6 +8,7 @@ class Layer {
       showPercentage = 100,
       hidePercentage = 0,
       visible = true,
+      renderHidden = false,
       preload = noop,
       setup = noop,
       draw = noop,

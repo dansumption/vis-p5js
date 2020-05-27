@@ -1,18 +1,18 @@
+import Glitch from '../glitch.js';
 const img = {
   preload() {
     this.images = [];
     this.currentImage;
-    this.numImages = 100;
+    this.numImages = 4;
     this.imgsLoaded = 0;
     this.min = 1;
-    this.max = 8189;
-    const p5 = this.processing;
+    this.max = 4;
 
     for (let i = 0; i < this.numImages; i++) {
-      const imgNumber = Math.floor(p5.random(this.min, this.max + 1));
-      const imgString = p5.nf(imgNumber, 5);
-      const imgName = '../img/image_' + imgString + '.jpg';
-      this.images[i] = p5.loadImage(imgName, () => {
+      const imgNumber = Math.floor(this.processing.random(this.min, this.max + 1));
+      const imgString = this.processing.nf(imgNumber, 1);
+      const imgName = '../img/set1/image_' + imgString + '.jpg';
+      this.images[i] = this.processing.loadImage(imgName, () => {
         this.imgsLoaded++;
       });
     }
@@ -22,13 +22,13 @@ const img = {
     return this.imgsLoaded === this.numImages;
   },
 
-  draw(spectrum, isPeak) {
-    const p5 = this.processing;
+  draw(spectrum, isPeak, fft) {
+    this.processing;
 
     const setImage = () => {
-      const imgNumber = Math.floor(p5.random(0, this.numImages));
+      const imgNumber = Math.floor(this.processing.random(0, this.numImages));
       this.currentImage = this.images[imgNumber];
-      this.layer.image(this.currentImage, p5.width, p5.height);
+      this.layer.image(this.currentImage, this.processing.width, this.processing.height);
     }
 
     let reRender = false;
@@ -37,20 +37,20 @@ const img = {
       reRender = true;
     }
     if (isPeak) {
-      const rndNum = Math.floor(p5.random(0, 4));
+      const rndNum = Math.floor(this.processing.random(0, 4));
       switch (rndNum) {
         case 0:
-          this.currentImage.filter(p5.INVERT);
+          this.currentImage.filter(this.processing.INVERT);
           reRender = true;
           break;
         case 1:
-          this.currentImage.filter(p5.POSTERIZE, Math.floor(p5.random(2, 20)));
+          this.currentImage.filter(this.processing.POSTERIZE, Math.floor(this.processing.random(2, 20)));
           reRender = true;
           break;
         case 2:
           this.currentImage.resize(
-            Math.floor(p5.random(20, p5.width * 2)),
-            Math.floor(p5.random(20, p5.height * 2))
+            Math.floor(this.processing.random(20, this.processing.width * 2)),
+            Math.floor(this.processing.random(20, this.processing.height * 2))
           );
           reRender = true;
           break;
@@ -60,7 +60,10 @@ const img = {
     }
     if (reRender) {
       if (this.currentImage.width && this.currentImage.height) {
-        this.layer.image(this.currentImage, 0, 0, p5.width, p5.height);
+        this.glitch = new Glitch(this.processing, this.currentImage);
+        // this.layer.image(this.currentImage, 0, 0, this.processing.width, this.processing.height);
+        this.layer.clear();
+        this.glitch.show(this.layer);
       }
     }
   },

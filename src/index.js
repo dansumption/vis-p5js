@@ -30,15 +30,18 @@ const sketch = (processing) => {
       console.log('sound loaded');
     });
 
-    // layers.push(new Layer(processing, { ...imgMixin }));
     layers.push(new Layer(processing, { name: 'threads', ...threadsMixin }));
-    layers.push(new Layer(processing, { name: 'worms', ...wormsMixin }));
+    layers.push(new Layer(processing, {
+      name: 'worms',
+    visible: true, showPercentage: 10, hidePercentage: 2,  ...wormsMixin
+    }));
     layers.push(
       new Layer(processing, {
         name: 'spin',
         visible: false,
         showPercentage: 1,
-        hidePercentage: 0.4,
+        hidePercentage: 1,
+        renderHidden: true,
         ...spinMixin,
       })
     );
@@ -46,11 +49,12 @@ const sketch = (processing) => {
       new Layer(processing, {
         name: 'eq',
         visible: false,
-        showPercentage: 0.1,
-        hidePercentage: 0.1,
+        showPercentage: 2,
+        hidePercentage: 2,
         ...eqMixin,
       })
     );
+    layers.push(new Layer(processing, { ...imgMixin }));
 
     layers.forEach((layer) => {
       layer.preload();
@@ -79,9 +83,11 @@ const sketch = (processing) => {
       layers.forEach((layer) => {
         layer.showHide();
         // console.log(layer.name , layer.visible);
-        if (layer.visible) {
+        if (layer.visible || layer.renderHidden) {
           layer.draw(spectrum, peakDetect.isDetected, fft);
-          processing.image(layer.layer, 0, 0);
+          if (layer.visible) {
+            processing.image(layer.layer, 0, 0);
+          }
         }
       });
     }
