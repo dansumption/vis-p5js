@@ -1,10 +1,12 @@
+import colorUtils from '../colors.js';
+
 let threshold = 230;
 
 const spin = {
   setup: function () {
     const p5 = this.processing;
     // this.layer.blendMode(p5.HARD_LIGHT);
-    this.layer.stroke(p5.color(0));
+    this.layer.stroke(colorUtils.getSecondary(this.processing, 20));
     this.layer.strokeWeight(2);
 
     this.layer.angleMode(p5.DEGREES);

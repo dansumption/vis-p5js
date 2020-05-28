@@ -1,3 +1,5 @@
+import colorUtils from '../colors.js';
+
 const eq = {
   draw(spectrum, isPeak) {
     const p5 = this.processing;
@@ -6,7 +8,7 @@ const eq = {
     const rheight = Math.round(p5.height / numBands);
     this.layer.noStroke();
     for (let i = 0; i < numBands; i++) {
-      this.layer.fill (isPeak ? p5.color(90, 90, 255) : p5.color(80));
+      this.layer.fill (isPeak ? colorUtils.getPrimary(this.processing) : colorUtils.getSecondary(this.processing));
       const level = spectrum[i];
       const prevLevel = i == 0 ? level : spectrum[i - 1];
       const nextLevel = i == numBands - 1 ? level : spectrum[i + 1];

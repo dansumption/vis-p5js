@@ -6,8 +6,8 @@ import wormsMixin from './layer/worms.js';
 import spinMixin from './layer/spin.js';
 import threadsMixin from './layer/threads.js';
 
-const audioFile = '../audio/Hierophant';
-const audioFormat = 'mp3';
+const audioFile = '../audio/hybrid/Myoptik';
+const audioFormat = 'wav';
 let counter;
 
 const sketch = (processing) => {
@@ -15,15 +15,15 @@ const sketch = (processing) => {
     // layers.push(new Layer(processing, { name: 'blobs', ...flowersMixin }));
     // layers.push(new Layer(processing, { name: 'img', ...imgMixin }));
     layers.push(new Layer(processing, { name: 'threads', ...threadsMixin }));
-    // layers.push(
-    //   new Layer(processing, {
-    //     name: 'worms',
-    //     visible: true,
-    //     showPercentage: 10,
-    //     hidePercentage: 2,
-    //     ...wormsMixin,
-    //   })
-    // );
+    layers.push(
+      new Layer(processing, {
+        name: 'worms',
+        visible: true,
+        showPercentage: 2,
+        hidePercentage: 4,
+        ...wormsMixin,
+      })
+    );
     layers.push(
       new Layer(processing, {
         name: 'spin',
@@ -35,14 +35,23 @@ const sketch = (processing) => {
         ...spinMixin,
       })
     );
-    layers.push(new Layer(processing, { ...flowersMixin }));
+    layers.push(
+      new Layer(processing, {
+        name: 'blob flowers',
+        visible: false,
+        showPercentage: 30,
+        hidePercentage: 10,
+        beatMultiplier: 5,
+        ...flowersMixin,
+      })
+    );
     layers.push(
       new Layer(processing, {
         name: 'img2',
         visible: false,
         showPercentage: 0.1,
-        hidePercentage: 30,
-        beatMultiplier: 900,
+        hidePercentage: 25,
+        beatMultiplier: 350,
         ...imgMixin,
       })
     );
@@ -68,9 +77,11 @@ const sketch = (processing) => {
     return audio && audio.isPlaying();
   };
   const play = () => {
+    console.log('play');
     audio.play();
   };
   const pause = () => {
+    console.log('pause');
     audio.pause();
   };
 
@@ -104,7 +115,6 @@ const sketch = (processing) => {
   processing.draw = () => {
     processing.background(0);
     if (isPlaying()) {
-      // counter.innerText = '> ' + audio.currentTime() + " / " + audio.duration();
       console.log(
         '> ' +
           processing.nf(audio.currentTime(), 4, 0) +
@@ -158,7 +168,10 @@ const sketch = (processing) => {
     return (
       audio &&
       audio.isLoaded() &&
-      layers.reduce((prev = true, layer) => prev && layer.ready())
+      layers.reduce((prev = true, layer) => {
+        console.log(layer.name, layer.ready());
+        return prev && layer.ready();
+      })
     );
   };
 };

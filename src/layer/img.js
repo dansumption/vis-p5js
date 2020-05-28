@@ -3,18 +3,18 @@ const img = {
   preload() {
     this.images = [];
     this.currentImage;
-    this.numImages = 12;
+    this.numImages = 6;
     this.imgsLoaded = 0;
     this.min = 1;
-    this.max = this.numImages;
+    this.max = 6;
 
     for (let i = 0; i < this.numImages; i++) {
       const imgNumber = i + 1;
-      //   Math.floor(
+      // const imgNumber = Math.floor(
       //   this.processing.random(this.min, this.max + 1)
       // );
       // const imgString = this.processing.nf(imgNumber, 1);
-      const imgName = '../img/set1/image_' + imgNumber + '.jpg';
+      const imgName = '../img/myoptik/image(' + imgNumber + ').png';
       this.images[i] = this.processing.loadImage(imgName, () => {
         this.imgsLoaded++;
       });

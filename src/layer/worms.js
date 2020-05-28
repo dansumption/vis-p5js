@@ -7,7 +7,7 @@ const worms = {
       this.cells.push(
         this.spawnParticle({
           length: Math.random() * 10 + 2,
-          color: colorUtils.getBlackOrWhite(this.processing, Math.random() * 50 + 100),
+          color: colorUtils.alternate(this.processing, i),
         })
       );
     }
@@ -23,8 +23,8 @@ const worms = {
       this.processing.strokeCap(this.processing.ROUND);
       this.processing.stroke(cell.color);
       const neck = Math.random();
-      const midX = cell.x - cell.vector.x * cell.length * ((energy - 128) / 255) * neck;
-      const midY = cell.y - cell.vector.y * cell.length * ((energy - 128) / 255) * neck;
+      const midX = cell.x - cell.vector.x * cell.length * ((energy - 200) / 255) * neck;
+      const midY = cell.y - cell.vector.y * cell.length * ((energy - 200) / 255) * neck;
       this.processing.line(
         cell.x,
         cell.y,
@@ -34,8 +34,8 @@ const worms = {
       this.processing.line(
         midX,
         midY,
-        midX - cell.lastVector.x * cell.length * ((energy - 128) / 255) * (1-neck),
-        midY - cell.lastVector.y * cell.length * ((energy - 128) / 255) * (1-neck)
+        midX - cell.lastVector.x * cell.length * ((energy - 200) / 255) * (1-neck),
+        midY - cell.lastVector.y * cell.length * ((energy - 200) / 255) * (1-neck)
       );
     });
   },
