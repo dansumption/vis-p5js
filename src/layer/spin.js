@@ -30,16 +30,16 @@ const spin = {
         const p5 = this.processing;
         const energy = fft.getEnergy('bass', 'mid');
         const rotated = Object.create(this.baseLayer);
-        this.layer.rotate(Math.random() * 10);
-        // let blend;
-        // if (energy < threshold) {
-        //   blend = p5.REMOVE;
-        //   // this.layer.tint(192, 70, 0)
-        // } else {
-        //   blend = p5.DARKEST;
-        //   // rotated.tint(255, 255, 255, energy);
-        // }
-        // this.layer.blendMode(blend);
+        this.layer.rotate(Math.random() * 8);
+        let blend;
+        if (energy < threshold) {
+          blend = p5.REMOVE;
+          // rotated.tint(255, 239, 0);
+        } else {
+          blend = p5.DARKEST;
+          // rotated.tint(239, 0, 0);
+        }
+        this.layer.blendMode(blend);
         const noiseX = p5.noise(Math.random() / 100) * 10 - 5;
         const noiseY = p5.noise(Math.random() / 100) * 10 - 5;
         this.layer.translate(noiseX, noiseY);
@@ -53,10 +53,10 @@ const spin = {
     const processing = this.processing;
     switch (processing.keyCode) {
       case 188:
-        threshold = Math.max(threshold - 1, 0);
+        threshold = Math.max(threshold - 10, 0);
         break;
       case 190:
-        threshold = Math.min(threshold + 1, 255);
+        threshold = Math.min(threshold + 10, 255);
         break;
     }
     console.log('spin threshold:', threshold);

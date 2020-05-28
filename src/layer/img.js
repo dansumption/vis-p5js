@@ -48,10 +48,10 @@ const img = {
 
   draw(spectrum, isPeak, fft) {
     let reRender = false;
-    if (!this.currentImage || Math.random() > 0.97) {
+    if (!this.currentImage || isPeak && Math.random() > 0.96) {
       this.setImage();
       reRender = true;
-    } else if (Math.random() > 0.4) {
+    } else if (isPeak && Math.random() > 0.6) {
       this.glitch = new Glitch(this.processing, this.layer);
       reRender = true;
     }

@@ -6,7 +6,7 @@ import wormsMixin from './layer/worms.js';
 import spinMixin from './layer/spin.js';
 import threadsMixin from './layer/threads.js';
 
-const audioFile = '../audio/hybrid/Myoptik';
+const audioFile = '../audio/hybrid/Myoptik.wav';
 const audioFormat = 'wav';
 let counter;
 
@@ -14,23 +14,32 @@ const sketch = (processing) => {
   const setupLayers = function (layers) {
     // layers.push(new Layer(processing, { name: 'blobs', ...flowersMixin }));
     // layers.push(new Layer(processing, { name: 'img', ...imgMixin }));
-    layers.push(new Layer(processing, { name: 'threads', ...threadsMixin }));
     layers.push(
       new Layer(processing, {
         name: 'worms',
         visible: true,
-        showPercentage: 2,
-        hidePercentage: 4,
+        showPercentage: 4,
+        hidePercentage: 2,
         ...wormsMixin,
       })
     );
+    layers.push(new Layer(processing, { name: 'threads', ...threadsMixin }));
+        layers.push(
+          new Layer(processing, {
+            name: 'worms',
+            visible: true,
+            showPercentage: 0.5,
+            hidePercentage: 4,
+            ...wormsMixin,
+          })
+        );
     layers.push(
       new Layer(processing, {
         name: 'spin',
         visible: false,
         showPercentage: 1,
-        hidePercentage: 2,
-        beatMultiplier: 3,
+        hidePercentage: 1.5,
+        beatMultiplier: 4,
         renderHidden: true,
         ...spinMixin,
       })
@@ -50,7 +59,7 @@ const sketch = (processing) => {
         name: 'img2',
         visible: false,
         showPercentage: 0.1,
-        hidePercentage: 25,
+        hidePercentage: 8,
         beatMultiplier: 350,
         ...imgMixin,
       })
@@ -169,7 +178,7 @@ const sketch = (processing) => {
       audio &&
       audio.isLoaded() &&
       layers.reduce((prev = true, layer) => {
-        console.log(layer.name, layer.ready());
+        // console.log(layer.name, layer.ready());
         return prev && layer.ready();
       })
     );

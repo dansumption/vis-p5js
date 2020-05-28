@@ -2,6 +2,7 @@ import colorUtils from '../colors.js';
 
 const eq = {
   draw(spectrum, isPeak) {
+    const upsideDown = Math.random() > 0.5;
     const p5 = this.processing;
     this.layer.clear();
     const numBands = spectrum.length;
@@ -15,26 +16,31 @@ const eq = {
       const prevWidth = Math.round(((prevLevel / 255) * p5.width) / 2);
       const rwidth = Math.round(((level / 255) * p5.width) / 2);
       const nextWidth = Math.round(((nextLevel / 255) * p5.width) / 2);
-      const initialY = p5.height - i * rheight;
+      const initialY = upsideDown ?
+        i * rheight
+        : p5.height - i * rheight;
+      const nextHeight = upsideDown ?
+        rheight
+        : -rheight;
       this.layer.bezier(
         p5.width / 2 - prevWidth,
         initialY,
         p5.width / 2 - rwidth,
-        initialY - rheight / 2,
+        initialY + nextHeight / 2,
         p5.width / 2 - rwidth,
-        initialY - rheight / 2,
+        initialY + nextHeight / 2,
         p5.width / 2 - nextWidth,
-        initialY - rheight
+        initialY + nextHeight
       );
       this.layer.bezier(
         p5.width / 2 + prevWidth,
         initialY,
         p5.width / 2 + rwidth,
-        initialY - rheight / 2,
+        initialY + nextHeight / 2,
         p5.width / 2 + rwidth,
-        initialY - rheight / 2,
+        initialY + nextHeight / 2,
         p5.width / 2 + nextWidth,
-        initialY - rheight
+        initialY + nextHeight
       );
     }
   },
