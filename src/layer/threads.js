@@ -2,12 +2,12 @@ import colorUtils from '../colors.js';
 
 const threads = {
   setup: function () {
-    const numCells = 4;
+    const numCells = 6;
     this.cells = [];
     for (let i = 0; i < numCells; i++) {
       this.cells.push(
         this.spawnParticle({
-          size: Math.random() * 70 + 15,
+          size: Math.random() * 70 + 30,
           color: colorUtils.alternate(this.processing, i, 11),
           bounce: false,
         })
@@ -20,7 +20,7 @@ const threads = {
     this.layer.strokeWeight(1);
     this.layer.noFill();
     this.cells.forEach((cell) => {
-      cell.vector.limit(((isPeak ? 5 : 0.5) * energy) / 8);
+      cell.vector.limit(((isPeak ? 15 : 0.5) * energy) / 8);
       this.moveParticle(cell);
       const dx = cell.x - this.processing.width / 2;
       const dy = cell.y - this.processing.height / 2;
@@ -30,7 +30,7 @@ const threads = {
         Math.cos(angle),
         Math.sin(angle)
       );
-      cell.vector.add(circleVector);
+      cell.vector = circleVector;
       cell.vector.add(p5.Vector.random2D());
       this.layer.stroke(cell.color);
       this.layer.push();
