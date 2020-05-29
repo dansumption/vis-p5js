@@ -12,7 +12,7 @@ const threads = {
       this.cells.push(
         this.spawnParticle({
           size: Math.random() * 70 + 30,
-          color: colorUtils.alternate(this.processing, i, 2),
+          color: colorUtils.alternate(this.processing, i, 7),
           bounce: false,
         })
       );
@@ -44,7 +44,7 @@ const threads = {
         this.layer.push();
         this.layer.translate(cell.x, cell.y);
 
-        const spikes = energy / 16;
+        const spikes = energy / 46;
         const innerSize = cell.size * isPeak ? 4 : 16;
         const outerSize = innerSize * energy;
         const increment = this.processing.TWO_PI / spikes;

@@ -6,8 +6,8 @@ import wormsMixin from './layer/worms.js';
 import spinMixin from './layer/spin.js';
 import threadsMixin from './layer/threads.js';
 
-const audioFile = '../audio/hybrid/Myoptik.wav';
-const audioFormat = 'wav';
+const audioFile = '../audio/tajalli.mp3';
+const audioFormat = 'mp3';
 let counter;
 
 const sketch = (processing) => {
