@@ -7,7 +7,7 @@ const img = {
     this.min = 1;
     this.scale = 0;
 
-    console.log(this.numImages, this.max);
+    console.log(`Loading ${this.numImages} from ${this.max} available`);
     for (let i = 0; i < this.numImages; i++) {
       // const imgNumber = i + 1;
       const imgNumber = Math.floor(random(this.min, this.max + 1));
@@ -45,17 +45,26 @@ const img = {
       width + this.scale * 2,
       this.currentHeight + this.scale * 2
     );
+      this.glitch = new Glitch(this.currentImage);
+
+        // console.log("setImage", 
+        //   width + this.scale * 2,
+        //   this.currentHeight + this.scale * 2,
+        //   this.images[imgNumber],
+        //   this.currentImage
+        // );
+
   },
 
   draw(spectrum, isPeak, fft) {
     let reRender = false;
-    if (!this.currentImage || true) {
-      // || isPeak) {
+    if (isPeak) {
       if (Math.random() > 1 - this.glitchChance) {
         this.glitch = new Glitch(this.layer);
         console.log('glitch', this.name);
         reRender = true;
-      } else if (Math.random() > 1 - this.newImgChance) {
+      } else
+        if (Math.random() > 1 - this.newImgChance) {
         this.setImage();
         console.log('load', this.name);
         reRender = true;
@@ -64,12 +73,11 @@ const img = {
         this.scale += 23;
       }
     }
-    if (reRender && this.currentImagewidth) {
-      this.glitch = new Glitch(this.currentImage);
-      // this.layer.image(this.currentImage, 0, 0, width, height);
-      this.layer.clear();
-      this.glitch.show(this.layer);
-    }
+if (reRender && this.currentImage.width) {
+  // this.layer.image(this.currentImage, 0, 0, width, height);
+  this.layer.clear();
+  this.glitch.show(this.layer);
+}
   }
 };
 

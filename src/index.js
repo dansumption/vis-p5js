@@ -24,9 +24,9 @@ const setupLayers = function(layers) {
       glitchChance: 0.23,
       visible: true,
       grow: true,
-      showPercentage: 20,
+      showPercentage: 25,
       hidePercentage: 1,
-      beatMultiplier: 2,
+      beatMultiplier: 1,
       ...imgMixin
     })
   );
@@ -71,22 +71,22 @@ const setupLayers = function(layers) {
       newImgChance: 0.23,
       glitchChance: 0.69,
       visible: true,
-      showPercentage: 90,
+      showPercentage: 0.001,
       hidePercentage: 3,
-      beatMultiplier: 3500,
+      beatMultiplier: 100000,
       ...imgMixin
     })
   );
-  layers.push(
-    new Layer({
-      name: 'blob flowers',
-      visible: false,
-      showPercentage: 100,
-      hidePercentage: 0,
-      beatMultiplier: 1,
-      ...flowersMixin
-    })
-  );
+  // layers.push(
+  //   new Layer({
+  //     name: 'blob flowers',
+  //     visible: false,
+  //     showPercentage: 100,
+  //     hidePercentage: 0,
+  //     beatMultiplier: 1,
+  //     ...flowersMixin
+  //   })
+  // );
   layers.push(
     new Layer({
       name: 'eq',

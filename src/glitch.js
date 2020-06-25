@@ -46,11 +46,11 @@ class Glitch {
   }
 
   replaceData(destImg, srcPixels) {
-    for (let y = 0; y < destImgheight; y++) {
-      for (let x = 0; x < destImgwidth; x++) {
+    for (let y = 0; y < destImg.height; y++) {
+      for (let x = 0; x < destImg.width; x++) {
         let r, g, b, a;
         let index;
-        index = (y * destImgwidth + x) * this.channelLen;
+        index = (y * destImg.width + x) * this.channelLen;
         r = index;
         g = index + 1;
         b = index + 2;
@@ -67,16 +67,16 @@ class Glitch {
   flowLine(srcImg, obj) {
     let destPixels, tempY;
     destPixels = new Uint8ClampedArray(srcImg.pixels);
-    obj.t1 %= srcImgheight;
+    obj.t1 %= srcImg.height;
     obj.t1 += obj.speed;
-    //tempY = floor (noise(obj.t1) * srcImgheight);
+    //tempY = floor (noise(obj.t1) * srcImg.height);
     tempY = floor(obj.t1);
-    for (let y = 0; y < srcImgheight; y++) {
+    for (let y = 0; y < srcImg.height; y++) {
       if (tempY === y) {
-        for (let x = 0; x < srcImgwidth; x++) {
+        for (let x = 0; x < srcImg.width; x++) {
           let r, g, b, a;
           let index;
-          index = (y * srcImgwidth + x) * this.channelLen;
+          index = (y * srcImg.width + x) * this.channelLen;
           r = index;
           g = index + 1;
           b = index + 2;
@@ -98,7 +98,7 @@ class Glitch {
     let rangeH;
 
     destPixels = new Uint8ClampedArray(srcImg.pixels);
-    rangeH = srcImgheight;
+    rangeH = srcImg.height;
     rangeMin = floor (random(0, rangeH));
     rangeMax =
       rangeMin +
@@ -106,14 +106,14 @@ class Glitch {
     offsetX =
       this.channelLen * floor (random(-40, 40));
 
-    for (let y = 0; y < srcImgheight; y++) {
+    for (let y = 0; y < srcImg.height; y++) {
       if (y > rangeMin && y < rangeMax) {
-        for (let x = 0; x < srcImgwidth; x++) {
+        for (let x = 0; x < srcImg.width; x++) {
           let r, g, b, a;
           let r2, g2, b2, a2;
           let index;
 
-          index = (y * srcImgwidth + x) * this.channelLen;
+          index = (y * srcImg.width + x) * this.channelLen;
           r = index;
           g = index + 1;
           b = index + 2;
@@ -140,27 +140,27 @@ class Glitch {
     destPixels = new Uint8ClampedArray(srcImg.pixels);
     randR =
        (floor (random(-range, range)) *
-        srcImgwidth +
+        srcImg.width +
         floor (random(-range, range))) *
       this.channelLen;
     randG =
        (floor (random(-range, range)) *
-        srcImgwidth +
+        srcImg.width +
         floor (random(-range, range))) *
       this.channelLen;
     randB =
        (floor (random(-range, range)) *
-        srcImgwidth +
+        srcImg.width +
         floor (random(-range, range))) *
       this.channelLen;
 
-    for (let y = 0; y < srcImgheight; y++) {
-      for (let x = 0; x < srcImgwidth; x++) {
+    for (let y = 0; y < srcImg.height; y++) {
+      for (let x = 0; x < srcImg.width; x++) {
         let r, g, b, a;
         let r2, g2, b2, a2;
         let index;
 
-        index = (y * srcImgwidth + x) * this.channelLen;
+        index = (y * srcImg.width + x) * this.channelLen;
         r = index;
         g = index + 1;
         b = index + 2;
@@ -185,13 +185,13 @@ class Glitch {
     let rectH;
     let destImg;
     startX = floor(
-      random(0, srcImgwidth - 30)
+      random(0, srcImg.width - 30)
     );
     startY = floor(
-      random(0, srcImgheight - 50)
+      random(0, srcImg.height - 50)
     );
     rectW = floor(
-      random(30, srcImgwidth - startX)
+      random(30, srcImg.width - startX)
     );
     rectH = floor (random(1, 50));
     destImg = srcImg.get(startX, startY, rectW, rectH);
