@@ -16,7 +16,7 @@ const threads = {
           size: Math.random() * 123 + 69 * sharp,
           color: colorUtils.alternate(i, alpha),
           bounce: false,
-          spikes: Math.random() * 5 + Math.random() * 5 + 1,
+          spikes: Math.random() * 10 + Math.random() * 10 + 1,
           sharp
         })
       );
@@ -28,12 +28,13 @@ const threads = {
     console.log('start fade');
   },
   fade: function() {
-    if (this.fades++ > 500) {
+    if (this.fades++ > 432) {
       this.endFade();
-    } else if (this.fades === 123) {
+    } else if (this.fades === 50) {
       this.spawn();
     }
-    this.layer.fill(0, 0, 0, 3);
+    const alpha = this.fades > 350 ? 3 : 1;
+    this.layer.fill(0, 0, 0, alpha);
     this.layer.rect(0, 0, width, height);
   },
   endFade: function() {
@@ -81,7 +82,7 @@ const threads = {
 
       for (let angle = 0; angle < TWO_PI; angle += increment)
         // triangle version
-        if (cell.sharp === 1) {
+        if (Math.random() < 0.9) { // cell.sharp === 1) {
           this.layer.triangle(
             innerSize * cos(angle) + Math.random() * 24 - 1,
             innerSize * sin(angle) + Math.random() * 24 - 1,
