@@ -6,7 +6,7 @@ const threads = {
     this.spawn();
   },
   spawn: function() {
-    const numCells = Math.random() * 4 + 2;
+    const numCells = Math.random() * 9 + 2;
     this.cells = [];
     const sharp = Math.random() > 0.23 ? 1 : 0;
     const alpha = sharp ? 3 : 1;
@@ -25,32 +25,35 @@ const threads = {
   startFade: function() {
     this.fading = true;
     this.fades = 0;
-    console.log("start fade")
+    console.log('start fade');
   },
-  fade: function () {
-    if (this.fades++ > 123) {
+  fade: function() {
+    if (this.fades++ > 500) {
       this.endFade();
+    } else if (this.fades === 123) {
+      this.spawn();
     }
-    this.layer.fill(0, 0, 0, this.fades / 5)
+    this.layer.fill(0, 0, 0, 3);
     this.layer.rect(0, 0, width, height);
   },
-  endFade: function () {
-    console.log("end fade")
+  endFade: function() {
+    console.log('end fade');
     this.fading = false;
-    this.spawn();
+    // this.spawn();
   },
   draw: function(spectrum, isPeak, fft) {
     const energy = fft.getEnergy('bass', 'mid');
     if (this.fading) {
       this.fade();
-    } else if (Math.random() < 0.001) {
+    } else if (isPeak) {
+      // Math.random() < 0.002) {
       this.startFade();
     }
 
     this.layer.strokeWeight(1);
     this.layer.noFill();
     this.cells.forEach(cell => {
-      cell.vector.limit((isPeak ? 15 : 0.5) * energy);
+      cell.vector.limit((isPeak ? 30 : 0.7) * energy);
       this.moveParticle(cell);
       const dx = cell.x - width / 2;
       const dy = cell.y - height / 2;
@@ -62,13 +65,18 @@ const threads = {
       );
       cell.vector = circleVector;
       cell.vector.add(p5.Vector.random2D().mult(energy / 23));
-      this.layer.stroke(cell.color);
+      if (Math.random() < 0.3) {
+        this.layer.stroke(0, 0, 0, 2);
+      } else {
+        cell.color.setAlpha(Math.ceil(energy/46));
+        this.layer.stroke(cell.color);
+      }
       this.layer.push();
       this.layer.translate(cell.x, cell.y);
 
       const innerSize =
         cell.size * isPeak ? Math.random() * 23 + 1 : Math.random() * 69 + 1;
-      const outerSize = (innerSize * energy) / 23;
+      const outerSize = (innerSize * energy) / 9;
       const increment = TWO_PI / cell.spikes;
 
       for (let angle = 0; angle < TWO_PI; angle += increment)

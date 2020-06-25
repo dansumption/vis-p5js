@@ -90,9 +90,9 @@ const setupLayers = function(layers) {
     new Layer({
       name: 'eq',
       visible: false,
-      showPercentage: 0.23,
-      hidePercentage: 2.3,
-      beatMultiplier: 234,
+      showPercentage: 0.001,
+      hidePercentage: 3.4,
+      beatMultiplier: 1000,
       ...eqMixin
     })
   );
