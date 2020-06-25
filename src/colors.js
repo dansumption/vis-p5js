@@ -12,13 +12,20 @@ const myoptik = [
   [255, 255, 255]
 ]
 
+const ice = [
+  [16, 175, 223],
+  [63, 208, 212],
+  [134, 198, 216],
+  [185, 234, 239]
+];
+
   const colorUtils = {
   getPrimary: (processing, alpha = 255) => {
-    const color = myoptik[2];
+    const color = ice[2];
     return processing.color(color[0], color[1], color[2], alpha);
   },
   getSecondary: (processing, alpha = 255) => {
-    const color = myoptik[1];
+    const color = ice[0];
     return processing.color(color[0], color[1], color[2], alpha);
   },
   getBlackOrWhite: (processing, alpha = 255) => {
@@ -27,7 +34,7 @@ const myoptik = [
   },
   alternate: (processing, iteration, alpha = 255) => {
     // const color = iteration % 2 == 0 ? 0 : 255;
-    const color = myoptik[iteration % 4];
+    const color = ice[iteration % 4];
     return processing.color(color[0], color[1], color[2], alpha);
   },
 };

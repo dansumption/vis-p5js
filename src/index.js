@@ -6,33 +6,51 @@ import wormsMixin from './layer/worms.js';
 import spinMixin from './layer/spin.js';
 import threadsMixin from './layer/threads.js';
 
-const audioFile = '../audio/tajalli.mp3';
-const audioFormat = 'mp3';
+const audioFile = '../audio/Ice1.wav';
+const audioFormat = 'wav';
 let counter;
 
-const sketch = (processing) => {
-  const setupLayers = function (layers) {
+const sketch = processing => {
+  const setupLayers = function(layers) {
     // layers.push(new Layer(processing, { name: 'blobs', ...flowersMixin }));
     // layers.push(new Layer(processing, { name: 'img', ...imgMixin }));
     layers.push(
       new Layer(processing, {
-        name: 'worms',
+        name: 'queenimage',
+        src: '../img/ice/queen/queen',
+        format: 'jpg',
+        numImages: 1,
+        max: 1,
+        newImgChance: 0.23,
+        glitchChance: 0.23,
         visible: true,
-        showPercentage: 4,
-        hidePercentage: 2,
-        ...wormsMixin,
+        grow: true,
+        showPercentage: 20,
+        hidePercentage: 1,
+        beatMultiplier: 2,
+        ...imgMixin
       })
     );
     layers.push(new Layer(processing, { name: 'threads', ...threadsMixin }));
+    // layers.push(
+    //   new Layer(processing, {
+    //     name: 'worms2',
+    //     visible: true,
+    //     showPercentage: 0.5,
+    //     hidePercentage: 4,
+    //     ...wormsMixin,
+    //   })
+    // );
         layers.push(
           new Layer(processing, {
             name: 'worms',
             visible: true,
-            showPercentage: 0.5,
-            hidePercentage: 4,
-            ...wormsMixin,
+            showPercentage: 4,
+            hidePercentage: 2,
+            ...wormsMixin
           })
         );
+
     layers.push(
       new Layer(processing, {
         name: 'spin',
@@ -41,37 +59,43 @@ const sketch = (processing) => {
         hidePercentage: 1.5,
         beatMultiplier: 4,
         renderHidden: true,
-        ...spinMixin,
+        ...spinMixin
+      })
+    );
+    layers.push(
+      new Layer(processing, {
+        name: 'img2',
+        src: '../img/ice/image',
+        format: 'jpg',
+        numImages: 29,
+        max: 29,
+        newImgChance: 0.23,
+        glitchChance: 0.69,
+        visible: false,
+        showPercentage: 0.01,
+        hidePercentage: 3,
+        beatMultiplier: 3500,
+        ...imgMixin
       })
     );
     layers.push(
       new Layer(processing, {
         name: 'blob flowers',
         visible: false,
-        showPercentage: 30,
-        hidePercentage: 10,
-        beatMultiplier: 5,
-        ...flowersMixin,
-      })
-    );
-    layers.push(
-      new Layer(processing, {
-        name: 'img2',
-        visible: false,
-        showPercentage: 0.1,
-        hidePercentage: 8,
-        beatMultiplier: 350,
-        ...imgMixin,
+        showPercentage: 100,
+        hidePercentage: 0,
+        beatMultiplier: 1,
+        ...flowersMixin
       })
     );
     layers.push(
       new Layer(processing, {
         name: 'eq',
         visible: false,
-        showPercentage: 2,
-        hidePercentage: 10,
-        beatMultiplier: 50,
-        ...eqMixin,
+        showPercentage: 0.23,
+        hidePercentage: 2.3,
+        beatMultiplier: 234,
+        ...eqMixin
       })
     );
   };
@@ -100,7 +124,7 @@ const sketch = (processing) => {
     });
     setupLayers(layers);
 
-    layers.forEach((layer) => {
+    layers.forEach(layer => {
       layer.preload();
     });
   };
@@ -115,7 +139,7 @@ const sketch = (processing) => {
     processing.soundFormats(audioFormat);
     fft = new p5.FFT(0.8, 64);
     peakDetect = new p5.PeakDetect(20, 20000, 0.18, 1);
-    layers.forEach((layer) => {
+    layers.forEach(layer => {
       layer.setup();
     });
     console.log('setup complete');
@@ -132,7 +156,7 @@ const sketch = (processing) => {
       );
       let spectrum = fft.analyze();
       peakDetect.update(fft);
-      layers.forEach((layer) => {
+      layers.forEach(layer => {
         layer.showHide(peakDetect.isDetected);
         // console.log(layer.name , layer.visible);
         if (layer.visible || layer.renderHidden) {
@@ -168,7 +192,7 @@ const sketch = (processing) => {
           }
           break;
         default:
-          layers.forEach((layer) => layer.keyTyped());
+          layers.forEach(layer => layer.keyTyped());
       }
     }
   };
