@@ -6,11 +6,11 @@ let iteration = 0;
 const flowers = {
   setup: function () {
     this.cells = [];
-    const color = colorUtils.alternate(this.processing, iteration, 1);
+    const color = colorUtils.alternate(iteration, 1);
     iteration++;
     for (let i = 0; i < numCells; i++) {
-      const centreSize = this.processing.width / 10; // Math.random() * 80;
-      const outerSize = this.processing.width; // centreSize + Math.random() * 80 + 10;
+      const centreSize = width / 10; // Math.random() * 80;
+      const outerSize = width; // centreSize + Math.random() * 80 + 10;
       this.cells.push(
         this.spawnParticle({
           size: Math.random() * 10,
@@ -36,21 +36,21 @@ const flowers = {
         this.layer.circle(0, 0, cell.size);
       } else if (cell.size <= cell.outerSize) {
         this.layer.fill(cell.petalColor);
-        const increment = this.processing.TWO_PI / cell.petals;
+        const increment = TWO_PI / cell.petals;
         for (
           let angle = 0;
-          angle < this.processing.TWO_PI;
+          angle < TWO_PI;
           angle += increment
         ) {
           this.layer.bezier(
             (cell.centreSize / 2) * Math.cos(angle),
-            (cell.centreSize / 2) * Math.sin(angle),
+            (cell.centreSize / 2) * sin(angle),
             cell.size * Math.cos(angle),
-            cell.size * Math.sin(angle),
+            cell.size * sin(angle),
             cell.size * Math.cos(angle + increment),
-            cell.size * Math.sin(angle + increment),
+            cell.size * sin(angle + increment),
             (cell.centreSize / 2) * Math.cos(angle + increment),
-            (cell.centreSize / 2) * Math.sin(angle + increment)
+            (cell.centreSize / 2) * sin(angle + increment)
           );
         }
         // this.layer.fill(cell.centreColor);
@@ -58,7 +58,7 @@ const flowers = {
       }
       this.layer.pop();
       cell.size += energy / 32;
-      if (cell.size < this.processing.width) {
+      if (cell.size < width) {
         return true;
       } else {
         if (iteration % 4 == 0) {

@@ -1,6 +1,5 @@
 class Glitch {
-  constructor(processing, img) {
-    this.processing = processing;
+  constructor(img) {
     this.channelLen = 4;
     this.imgOrigin = img;
     this.imgOrigin.loadPixels();
@@ -16,9 +15,9 @@ class Glitch {
     for (let i = 0; i < 1; i++) {
       let o = {
         pixels: null,
-        t1: this.processing.floor(this.processing.random(0, 1000)),
-        speed: this.processing.floor(this.processing.random(4, 24)),
-        randX: this.processing.floor(this.processing.random(24, 80)),
+        t1: floor (random(0, 1000)),
+        speed: floor (random(4, 24)),
+        randX: floor (random(24, 80)),
       };
       this.flowLineImgs.push(o);
     }
@@ -47,11 +46,11 @@ class Glitch {
   }
 
   replaceData(destImg, srcPixels) {
-    for (let y = 0; y < destImg.height; y++) {
-      for (let x = 0; x < destImg.width; x++) {
+    for (let y = 0; y < destImgheight; y++) {
+      for (let x = 0; x < destImgwidth; x++) {
         let r, g, b, a;
         let index;
-        index = (y * destImg.width + x) * this.channelLen;
+        index = (y * destImgwidth + x) * this.channelLen;
         r = index;
         g = index + 1;
         b = index + 2;
@@ -68,16 +67,16 @@ class Glitch {
   flowLine(srcImg, obj) {
     let destPixels, tempY;
     destPixels = new Uint8ClampedArray(srcImg.pixels);
-    obj.t1 %= srcImg.height;
+    obj.t1 %= srcImgheight;
     obj.t1 += obj.speed;
-    //tempY = this.processing.floor(this.processing.noise(obj.t1) * srcImg.height);
-    tempY = this.processing.floor(obj.t1);
-    for (let y = 0; y < srcImg.height; y++) {
+    //tempY = floor (noise(obj.t1) * srcImgheight);
+    tempY = floor(obj.t1);
+    for (let y = 0; y < srcImgheight; y++) {
       if (tempY === y) {
-        for (let x = 0; x < srcImg.width; x++) {
+        for (let x = 0; x < srcImgwidth; x++) {
           let r, g, b, a;
           let index;
-          index = (y * srcImg.width + x) * this.channelLen;
+          index = (y * srcImgwidth + x) * this.channelLen;
           r = index;
           g = index + 1;
           b = index + 2;
@@ -99,22 +98,22 @@ class Glitch {
     let rangeH;
 
     destPixels = new Uint8ClampedArray(srcImg.pixels);
-    rangeH = srcImg.height;
-    rangeMin = this.processing.floor(this.processing.random(0, rangeH));
+    rangeH = srcImgheight;
+    rangeMin = floor (random(0, rangeH));
     rangeMax =
       rangeMin +
-      this.processing.floor(this.processing.random(1, rangeH - rangeMin));
+      floor (random(1, rangeH - rangeMin));
     offsetX =
-      this.channelLen * this.processing.floor(this.processing.random(-40, 40));
+      this.channelLen * floor (random(-40, 40));
 
-    for (let y = 0; y < srcImg.height; y++) {
+    for (let y = 0; y < srcImgheight; y++) {
       if (y > rangeMin && y < rangeMax) {
-        for (let x = 0; x < srcImg.width; x++) {
+        for (let x = 0; x < srcImgwidth; x++) {
           let r, g, b, a;
           let r2, g2, b2, a2;
           let index;
 
-          index = (y * srcImg.width + x) * this.channelLen;
+          index = (y * srcImgwidth + x) * this.channelLen;
           r = index;
           g = index + 1;
           b = index + 2;
@@ -140,28 +139,28 @@ class Glitch {
     range = 16;
     destPixels = new Uint8ClampedArray(srcImg.pixels);
     randR =
-      (this.processing.floor(this.processing.random(-range, range)) *
-        srcImg.width +
-        this.processing.floor(this.processing.random(-range, range))) *
+       (floor (random(-range, range)) *
+        srcImgwidth +
+        floor (random(-range, range))) *
       this.channelLen;
     randG =
-      (this.processing.floor(this.processing.random(-range, range)) *
-        srcImg.width +
-        this.processing.floor(this.processing.random(-range, range))) *
+       (floor (random(-range, range)) *
+        srcImgwidth +
+        floor (random(-range, range))) *
       this.channelLen;
     randB =
-      (this.processing.floor(this.processing.random(-range, range)) *
-        srcImg.width +
-        this.processing.floor(this.processing.random(-range, range))) *
+       (floor (random(-range, range)) *
+        srcImgwidth +
+        floor (random(-range, range))) *
       this.channelLen;
 
-    for (let y = 0; y < srcImg.height; y++) {
-      for (let x = 0; x < srcImg.width; x++) {
+    for (let y = 0; y < srcImgheight; y++) {
+      for (let x = 0; x < srcImgwidth; x++) {
         let r, g, b, a;
         let r2, g2, b2, a2;
         let index;
 
-        index = (y * srcImg.width + x) * this.channelLen;
+        index = (y * srcImgwidth + x) * this.channelLen;
         r = index;
         g = index + 1;
         b = index + 2;
@@ -185,16 +184,16 @@ class Glitch {
     let rectW;
     let rectH;
     let destImg;
-    startX = this.processing.floor(
-      this.processing.random(0, srcImg.width - 30)
+    startX = floor(
+      random(0, srcImgwidth - 30)
     );
-    startY = this.processing.floor(
-      this.processing.random(0, srcImg.height - 50)
+    startY = floor(
+      random(0, srcImgheight - 50)
     );
-    rectW = this.processing.floor(
-      this.processing.random(30, srcImg.width - startX)
+    rectW = floor(
+      random(30, srcImgwidth - startX)
     );
-    rectH = this.processing.floor(this.processing.random(1, 50));
+    rectH = floor (random(1, 50));
     destImg = srcImg.get(startX, startY, rectW, rectH);
     destImg.loadPixels();
     return destImg;
@@ -204,26 +203,26 @@ class Glitch {
     // restore the original state
     this.replaceData(this.imgOrigin, this.copyData);
 
-    // sometimes pass without effect this.processing
-    let n = this.processing.floor(this.processing.random(100));
+    // sometimes pass without effect 
+    let n = floor (random(100));
     if (n > 75 && this.throughFlag) {
       this.throughFlag = false;
       setTimeout(() => {
         this.throughFlag = true;
-      }, this.processing.floor(this.processing.random(40, 400)));
+      }, floor (random(40, 400)));
     }
     if (!this.throughFlag) {
       layer.push();
 //       layer.translate(
-//         (this.processing.width - this.imgOrigin.width) / 2,
-//         (this.processing.height - this.imgOrigin.height) / 2
+//         (width - this.imgOriginwidth) / 2,
+//         (height - this.imgOriginheight) / 2
 //       );
       layer.image(
         this.imgOrigin,
         0,
         0,
-        this.processing.width,
-        this.processing.height
+        width,
+        height
       );
       layer.pop();
       return;
@@ -239,7 +238,7 @@ class Glitch {
 
     // shift line
     this.shiftLineImgs.forEach((v, i, arr) => {
-      if (this.processing.floor(this.processing.random(100)) > 50) {
+      if  (floor (random(100)) > 50) {
         arr[i] = this.shiftLine(this.imgOrigin);
         this.replaceData(this.imgOrigin, arr[i]);
       } else {
@@ -251,7 +250,7 @@ class Glitch {
 
     // shift rgb
     this.shiftRGBs.forEach((v, i, arr) => {
-      if (this.processing.floor(this.processing.random(100)) > 65) {
+      if  (floor (random(100)) > 65) {
         arr[i] = this.shiftRGB(this.imgOrigin);
         this.replaceData(this.imgOrigin, arr[i]);
       }
@@ -259,21 +258,21 @@ class Glitch {
 
     layer.push();
 //     layer.translate(
-//       (this.processing.width - this.imgOrigin.width) / 2,
-//       (this.processing.height - this.imgOrigin.height) / 2
+//       (width - this.imgOriginwidth) / 2,
+//       (height - this.imgOriginheight) / 2
 //     );
     layer.image(
       this.imgOrigin,
       0,
       0,
-      this.processing.width,
-      this.processing.height
+      width,
+      height
     );
     layer.pop();
 
     // scat image
     this.scatImgs.forEach((obj) => {
-      if (this.processing.floor(this.processing.random(100)) > 80) {
+      if  (floor (random(100)) > 80) {
         obj.img = this.getRandomRectImg(this.imgOrigin);
       }
       if (obj.img) {
@@ -281,8 +280,8 @@ class Glitch {
           obj.img,
           0,
           0,
-          this.processing.width,
-          this.processing.height
+          width,
+          height
         );
       }
     });

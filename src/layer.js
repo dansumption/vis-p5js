@@ -3,7 +3,6 @@ const noop = () => {};
 
 class Layer {
   constructor(
-    processing,
     {
       showPercentage = 100,
       hidePercentage = 0,
@@ -21,8 +20,6 @@ class Layer {
     Object.assign(this, particle);
     Object.assign(this, { ...rest });
     this.visible = visible;
-    this.processing = processing;
-    this.layer = processing.createGraphics(processing.width, processing.height);
     this.preload = preload;
     this.setup = setup;
     this.draw = draw;
@@ -46,6 +43,10 @@ class Layer {
           break;
       }
     };
+    this.createGraphics = function (w, h) {
+      this.layer = createGraphics(w, h);
+    }
+
   }
 }
 

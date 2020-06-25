@@ -6,48 +6,48 @@ const eq = {
     //   const upsideDown = Math.random() > 0.5;
     //   this.layer.clear();
     //   const numBands = spectrum.length;
-    //   const rheight = Math.round(this.processing.height / numBands);
+    //   const rheight = Math.round(height / numBands);
     //   this.layer.noStroke();
-    //       this.layer.translate(this.processing.width / 2, this.processing.height / 2);
+    //       this.layer.translate(width / 2, height / 2);
 
     //   for (let i = 0; i < numBands; i++) {
     //     this.layer.fill(
     //       isPeak
-    //         ? colorUtils.getPrimary(this.processing)
-    //         : colorUtils.getSecondary(this.processing)
+    //         ? colorUtils.getPrimary()
+    //         : colorUtils.getSecondary()
     //     );
     //     const level = spectrum[i];
     //     const prevLevel = i == 0 ? level : spectrum[i - 1];
     //     const nextLevel = i == numBands - 1 ? level : spectrum[i + 1];
     //     const prevWidth = Math.round(
-    //       ((prevLevel / 255) * this.processing.width) / 2
+    //       ((prevLevel / 255) * width) / 2
     //     );
-    //     const rwidth = Math.round(((level / 255) * this.processing.width) / 2);
+    //     const rwidth = Math.round(((level / 255) * width) / 2);
     //     const nextWidth = Math.round(
-    //       ((nextLevel / 255) * this.processing.width) / 2
+    //       ((nextLevel / 255) * width) / 2
     //     );
     //     const initialY = upsideDown
     //       ? i * rheight
-    //       : this.processing.height - i * rheight;
+    //       : height - i * rheight;
     //     const nextHeight = upsideDown ? rheight : -rheight;
     //     this.layer.bezier(
-    //       this.processing.width / 2 - prevWidth,
+    //       width / 2 - prevWidth,
     //       initialY,
-    //       this.processing.width / 2 - rwidth,
+    //       width / 2 - rwidth,
     //       initialY + nextHeight / 2,
-    //       this.processing.width / 2 - rwidth,
+    //       width / 2 - rwidth,
     //       initialY + nextHeight / 2,
-    //       this.processing.width / 2 - nextWidth,
+    //       width / 2 - nextWidth,
     //       initialY + nextHeight
     //     );
     //     this.layer.bezier(
-    //       this.processing.width / 2 + prevWidth,
+    //       width / 2 + prevWidth,
     //       initialY,
-    //       this.processing.width / 2 + rwidth,
+    //       width / 2 + rwidth,
     //       initialY + nextHeight / 2,
-    //       this.processing.width / 2 + rwidth,
+    //       width / 2 + rwidth,
     //       initialY + nextHeight / 2,
-    //       this.processing.width / 2 + nextWidth,
+    //       width / 2 + nextWidth,
     //       initialY + nextHeight
     //     );
     //   }
@@ -56,8 +56,8 @@ const eq = {
     this.layer.clear();
     this.layer.push();
     this.layer.translate(
-      this.processing.width / 2 + Math.random() * 32 - 16,
-      this.processing.height / 2 + Math.random() * 32 - 16
+      width / 2 + Math.random() * 32 - 16,
+      height / 2 + Math.random() * 32 - 16
     );
     this.layer.noStroke();
     const energy = fft.getEnergy('bass', 'mid');
@@ -66,17 +66,17 @@ const eq = {
     const increment = (Math.PI * 2) / numBands;
     for (let i = 0; i < numBands; i++) {
       this.layer.fill(
-        colorUtils.alternate(this.processing, energy, Math.random() * 9)
+        colorUtils.alternate(energy, Math.random() * 9)
       );
       const angle = i * increment + Math.random() * Math.PI * 4;
       const outerSize = radius + spectrum[i];
       this.layer.triangle(
-        radius * this.processing.cos(angle),
-        radius * this.processing.sin(angle),
-        outerSize * this.processing.cos(angle + increment * 3),
-        outerSize * this.processing.sin(angle + increment * 3),
-        radius * this.processing.cos(angle + increment * 6),
-        radius * this.processing.sin(angle + increment * 6)
+        radius * cos(angle),
+        radius * sin(angle),
+        outerSize * cos(angle + increment * 3),
+        outerSize * sin(angle + increment * 3),
+        radius * cos(angle + increment * 6),
+        radius * sin(angle + increment * 6)
       );
     }
     // };

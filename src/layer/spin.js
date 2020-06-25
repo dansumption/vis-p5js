@@ -4,54 +4,49 @@ let threshold = 230;
 
 const spin = {
   setup: function () {
-    const p5 = this.processing;
-    // this.layer.blendMode(p5.HARD_LIGHT);
-    this.layer.stroke(colorUtils.getSecondary(this.processing, 20));
+    // this.layer.blendMode(HARD_LIGHT);
+    this.layer.stroke(colorUtils.getSecondary(20));
     this.layer.strokeWeight(2);
 
-    this.layer.angleMode(p5.DEGREES);
-    this.layer.imageMode(p5.CENTER);
-    this.layer.translate(p5.width / 2, p5.height / 2);
+    this.layer.angleMode(DEGREES);
+    this.layer.imageMode(CENTER);
+    this.layer.translate(width / 2, height / 2);
 
     for (let i = 0; i < 1000; i++) {
       this.layer.point(
-        p5.randomGaussian(0, 0.001) * p5.width - p5.width / 2,
-        p5.randomGaussian(0, 0.001) * p5.height - p5.height / 2
+        randomGaussian(0, 0.001) * width - width / 2,
+        randomGaussian(0, 0.001) * height - height / 2
       );
     }
           
     this.baseLayer = Object.create(this.layer);
   },
   draw: function (spectrum, isPeak, fft) {
-    if (this.processing) {
       this.showHide();
       if (this.visible) {
 
-        const p5 = this.processing;
         const energy = fft.getEnergy('bass', 'mid');
         const rotated = Object.create(this.baseLayer);
         this.layer.rotate(Math.random() * 8);
         let blend;
         if (energy < threshold) {
-          blend = p5.REMOVE;
+          blend = REMOVE;
           // rotated.tint(255, 239, 0);
         } else {
-          blend = p5.DARKEST;
+          blend = DARKEST;
           // rotated.tint(239, 0, 0);
         }
         this.layer.blendMode(blend);
-        const noiseX = p5.noise(Math.random() / 100) * 10 - 5;
-        const noiseY = p5.noise(Math.random() / 100) * 10 - 5;
+        const noiseX = noise(Math.random() / 100) * 10 - 5;
+        const noiseY = noise(Math.random() / 100) * 10 - 5;
         this.layer.translate(noiseX, noiseY);
         this.layer.image(rotated, 0, 0);
       } else {
         // this.layer.clear;
       }
-    }
   },
   keyTyped: function () {
-    const processing = this.processing;
-    switch (processing.keyCode) {
+    switch (keyCode) {
       case 188:
         threshold = Math.max(threshold - 10, 0);
         break;

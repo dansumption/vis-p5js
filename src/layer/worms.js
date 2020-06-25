@@ -8,7 +8,7 @@ const worms = {
       this.cells.push(
         this.spawnParticle({
           length: Math.random() * 333 + 123,
-          color: colorUtils.alternate(this.processing, i, Math.random() * 69),
+          color: colorUtils.alternate(i, Math.random() * 69),
           weight: 1,
           vector: this.vector,
           bounce: false
@@ -27,20 +27,20 @@ const worms = {
       // cell.vector = this.vector.limit(((isPeak ? 15 : 0.5) * energy));
       this.moveParticle(cell);
       cell.vector.add(p5.Vector.random2D().mult(0.01));
-      this.processing.strokeWeight(cell.weight);
-      // this.processing.strokeCap(this.processing.PROJECT);
-      this.processing.stroke(cell.color);
+      strokeWeight(cell.weight);
+      // strokeCap (PROJECT);
+      stroke(cell.color);
       const neck = Math.random();
       const midX = cell.x - cell.vector.x * cell.length * ((energy - 128) / 1024) * neck;
       const midY =
         cell.y - cell.vector.y * cell.length * ((energy - 128) / 1024) * neck;
-      this.processing.line(
+      line(
         cell.x,
         cell.y,
         midX, midY
         
       );
-      // this.processing.line(
+      // line(
       //   midX,
       //   midY,
       //   midX -
