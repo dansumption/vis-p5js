@@ -26,29 +26,32 @@ const threads = {
     this.fading = true;
     this.fades = 0;
     console.log('start fade');
+        this.layer.fill(0, 0, 0, 23);
+        this.layer.rect(0, 0, width, height);
   },
   fade: function() {
-    if (this.fades++ > 432) {
+    if (this.fades++ > 512) {
       this.endFade();
-    } else if (this.fades === 50) {
+    } else if (this.fades === 46) {
       this.spawn();
     }
-    const alpha = this.fades > 350 ? 3 : 1;
+    const alpha = Math.ceil(this.fades / 500 + 2.43);
     this.layer.fill(0, 0, 0, alpha);
     this.layer.rect(0, 0, width, height);
   },
   endFade: function() {
     console.log('end fade');
     this.fading = false;
-    // this.spawn();
+    this.spawn();
   },
   draw: function(spectrum, isPeak, fft) {
     const energy = fft.getEnergy('bass', 'mid');
-    if (this.fading) {
-      this.fade();
-    } else if (isPeak) {
+    if ((!this.fading || this.fades > 42) && (isPeak || energy === 0)) {
       // Math.random() < 0.002) {
       this.startFade();
+    }
+    else if (this.fading) {
+      this.fade();
     }
 
     this.layer.strokeWeight(1);
@@ -66,7 +69,7 @@ const threads = {
       );
       cell.vector = circleVector;
       cell.vector.add(p5.Vector.random2D().mult(energy / 23));
-      if (Math.random() < 0.3) {
+      if (Math.random() < 0.11) {
         this.layer.stroke(0, 0, 0, 2);
       } else {
         cell.color.setAlpha(Math.ceil(energy/46));

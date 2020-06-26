@@ -6,7 +6,7 @@ import wormsMixin from './layer/worms.js';
 import spinMixin from './layer/spin.js';
 import threadsMixin from './layer/threads.js';
 
-const audioFile = '../audio/Ice1.wav';
+const audioFile = '../audio/ice1.wav';
 const audioFormat = 'wav';
 let counter;
 
@@ -44,7 +44,7 @@ const setupLayers = function(layers) {
     new Layer({
       name: 'worms',
       visible: true,
-      showPercentage: 23,
+      showPercentage: 113,
       hidePercentage: 2,
       ...wormsMixin
     })
@@ -150,8 +150,8 @@ window.setup = () => {
 };
 
 window.draw = () => {
-  background(0);
   if (isPlaying()) {
+      background(0);
     console.log(
       '> ' + nf(audio.currentTime(), 4, 0) + ' / ' + nf(audio.duration(), 4, 0)
     );
@@ -192,6 +192,15 @@ window.keyTyped = () => {
           play();
         }
         break;
+      case 188:
+        audio.jump(audio.currentTime() - 10, audio.duration() - audio.currentTime() + 10);
+
+      case 190:
+        audio.jump(
+          audio.currentTime() + 10,
+          audio.duration() - audio.currentTime() - 10
+        );
+
       default:
         layers.forEach(layer => layer.keyTyped());
     }

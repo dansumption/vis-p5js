@@ -8,7 +8,7 @@ const worms = {
       this.cells.push(
         this.spawnParticle({
           length: Math.random() * 333 + 123,
-          color: colorUtils.alternate(i, Math.random() * 69),
+          color: colorUtils.alternate(i, Math.random() * 23 + 17),
           weight: 1,
           vector: this.vector,
           bounce: false
@@ -27,7 +27,7 @@ const worms = {
       // cell.vector = this.vector.limit(((isPeak ? 15 : 0.5) * energy));
       this.moveParticle(cell);
       cell.vector.add(p5.Vector.random2D().mult(0.01));
-      strokeWeight(cell.weight);
+      strokeWeight(cell.weight * Math.ceil((energy - 145)/100));
       // strokeCap (PROJECT);
       stroke(cell.color);
       const neck = Math.random();
