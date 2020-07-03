@@ -5,12 +5,13 @@ import imgMixin from './layer/img.js';
 import wormsMixin from './layer/worms.js';
 import spinMixin from './layer/spin.js';
 import threadsMixin from './layer/threads.js';
+import backdropMixin from './layer/backdrop.js';
 
-const audioFile = '../audio/ice1.wav';
-const audioFormat = 'wav';
+const audioFile = '../audio/XOLO@Ma3azief2.mp3';
+const audioFormat = 'mp3';
 let counter;
 
-const setupLayers = function(layers) {
+const setupLayers = function (layers) {
   // layers.push(new Layer({ name: 'blobs', ...flowersMixin }));
   // layers.push(new Layer({ name: 'img', ...imgMixin }));
   // layers.push(
@@ -30,6 +31,8 @@ const setupLayers = function(layers) {
   //     ...imgMixin
   //   })
   // );
+  layers.push(new Layer({ name: 'backdrop', ...backdropMixin }));
+
   layers.push(new Layer({ name: 'threads', ...threadsMixin }));
   // layers.push(
   //   new Layer({
@@ -46,7 +49,7 @@ const setupLayers = function(layers) {
       visible: true,
       showPercentage: 113,
       hidePercentage: 2,
-      ...wormsMixin
+      ...wormsMixin,
     })
   );
   // layers.push(
@@ -93,7 +96,7 @@ const setupLayers = function(layers) {
       showPercentage: 0.001,
       hidePercentage: 3.4,
       beatMultiplier: 1000,
-      ...eqMixin
+      ...eqMixin,
     })
   );
 };
@@ -119,7 +122,7 @@ const pause = () => {
 window.preload = () => {
   setupLayers(layers);
 
-  layers.forEach(layer => {
+  layers.forEach((layer) => {
     layer.preload();
   });
 };
@@ -129,7 +132,7 @@ window.setup = () => {
   frameRate(60);
   background(0);
 
-  layers.forEach(layer => {
+  layers.forEach((layer) => {
     layer.createGraphics(width, height);
   });
 
@@ -143,7 +146,7 @@ window.setup = () => {
   soundFormats(audioFormat);
   fft = new p5.FFT(0.8, 64);
   peakDetect = new p5.PeakDetect(20, 20000, 0.18, 1);
-  layers.forEach(layer => {
+  layers.forEach((layer) => {
     layer.setup();
   });
   console.log('setup complete');
@@ -151,13 +154,13 @@ window.setup = () => {
 
 window.draw = () => {
   if (isPlaying()) {
-      background(0);
+    background(0);
     console.log(
       '> ' + nf(audio.currentTime(), 4, 0) + ' / ' + nf(audio.duration(), 4, 0)
     );
     let spectrum = fft.analyze();
     peakDetect.update(fft);
-    layers.forEach(layer => {
+    layers.forEach((layer) => {
       layer.showHide(peakDetect.isDetected);
       // console.log(layer.name , layer.visible);
       if (layer.visible || layer.renderHidden) {
@@ -193,7 +196,10 @@ window.keyTyped = () => {
         }
         break;
       case 188:
-        audio.jump(audio.currentTime() - 10, audio.duration() - audio.currentTime() + 10);
+        audio.jump(
+          audio.currentTime() - 10,
+          audio.duration() - audio.currentTime() + 10
+        );
 
       case 190:
         audio.jump(
@@ -202,7 +208,7 @@ window.keyTyped = () => {
         );
 
       default:
-        layers.forEach(layer => layer.keyTyped());
+        layers.forEach((layer) => layer.keyTyped());
     }
   }
 };

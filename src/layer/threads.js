@@ -45,8 +45,10 @@ const threads = {
   },
   instaFade: function (energy) {
     const alpha = Math.random() * 3.3 + (255 - energy) * 0.08;
-    this.layer.fill(0, 0, 0, alpha);
+    const level = 255 - energy;
+    this.layer.fill(level, level * 1.3, level * 1.5, alpha);
     this.layer.rect(0, 0, width, height);
+    this.layer.noFill();
   },
   draw: function (spectrum, isPeak, fft) {
     const energy = fft.getEnergy('bass', 'mid');
@@ -69,7 +71,7 @@ const threads = {
     this.layer.noFill();
 
     // if (energy < 228) {
-      this.instaFade(energy);
+    this.instaFade(energy);
     // }
 
     let repeats = Math.max((energy - 200) / 15, 1);
@@ -129,17 +131,32 @@ const threads = {
 
           // curly version
           else {
-            for (let angle = 0; angle < TWO_PI; angle += increment)
+            for (let angle = 0; angle < TWO_PI; angle += increment) {
+              // const point1 = p5.Vector.random2D();
+              // const point2 = p5.Vector.random2D();
               this.layer.bezier(
                 innerSize * cos(angle),
                 innerSize * sin(angle),
-                (outerSize * cos(angle - increment + cell.spikes)) / 2,
-                (outerSize * sin(angle - increment + cell.spikes)) / 2,
-                (outerSize * cos(angle + increment + cell.spikes)) / 2,
-                (outerSize * sin(angle + increment + cell.spikes)) / 2,
+                // point1.x,
+                // point1.y,
+                // point2.x,
+                // point2.y,
+                (outerSize * cos(angle - increment + cell.spikes)) / 2 +
+                  Math.random() * 24 -
+                  1,
+                (outerSize * sin(angle - increment + cell.spikes)) / 2 +
+                  Math.random() * 24 -
+                  1,
+                (outerSize * cos(angle + increment + cell.spikes)) / 2 +
+                  Math.random() * 24 -
+                  1,
+                (outerSize * sin(angle + increment + cell.spikes)) / 2 +
+                  Math.random() * 24 -
+                  1,
                 innerSize * cos(angle + cell.spikes),
                 innerSize * sin(angle + cell.spikes)
               );
+            }
           }
         }
         this.layer.pop();
