@@ -20,13 +20,31 @@ const ice = [
   [255, 255, 255]
 ];
 
+const bw = [
+  [255, 255, 255],
+  [0, 0, 0],
+  [240, 240, 240],
+  [200, 200, 200]
+];
+
+const eq = {
+  bass: [0, 0, 46],
+  midbass: [0, 0, 92],
+  mid: [128, 128, 128],
+  midtreble: [207, 0, 0],
+  treble: [255, 255, 255],
+  all: [0, 0, 0]
+}
+
+const palette = bw;
+
   const colorUtils = {
   getPrimary: (alpha = 255) => {
-    const chosenColor = ice[2];
+    const chosenColor = palette[0];
     return color(chosenColor[0], chosenColor[1], chosenColor[2], alpha);
   },
   getSecondary: (alpha = 255) => {
-    const chosenColor = ice[0];
+    const chosenColor = palette[1];
     return color(chosenColor[0], chosenColor[1], chosenColor[2], alpha);
   },
   getBlackOrWhite: (alpha = 255) => {
@@ -35,7 +53,7 @@ const ice = [
   },
   alternate: (iteration, alpha = 255) => {
     // const chosenColor = iteration % 2 == 0 ? 0 : 255;
-    const chosenColor = ice[iteration % 4];
+    const chosenColor = palette[iteration % palette.length];
     return color(chosenColor[0], chosenColor[1], chosenColor[2], alpha);
   },
 };

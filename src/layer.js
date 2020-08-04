@@ -27,6 +27,8 @@ class Layer {
     this.ready = ready;
     this.showPercentage = showPercentage;
     this.hidePercentage = hidePercentage;
+    this.lastEnergy = 0;
+    this.energyDiff = 0;
     this.showHide = function (isBeat) {
       switch (this.visible) {
         case true:

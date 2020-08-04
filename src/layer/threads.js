@@ -5,6 +5,7 @@ const threads = {
   setup: function () {
     this.layer = createGraphics(width, width);
     this.spawn(1);
+    this.lastEnergy = 0;
   },
   spawn: function (energy = 1) {
     const numCells = Math.ceil(energy / 23) + Math.random() * 5 + 2;
@@ -44,14 +45,18 @@ const threads = {
     this.spawn(energy);
   },
   instaFade: function (energy) {
-    const alpha = Math.random() * 3.3 + (255 - energy) * 0.08;
+    const alpha = Math.random() * 3 + (255 - energy) * 0.0005;
     const level = 255 - energy;
-    this.layer.fill(level, level * 1.3, level * 1.5, alpha);
+    this.layer.fill(level, level, level, alpha);
     this.layer.rect(0, 0, width, height);
     this.layer.noFill();
   },
-  draw: function (spectrum, isPeak, fft) {
+  draw: function (audio) {
+    const spectrum = audio.spectrum;
+    const isPeak = audio.peak;
+    const fft = audio.fft;
     const energy = fft.getEnergy('bass', 'mid');
+    const energyDiff = energy - this.lastEnergy;
     // if (
     //   ((!this.fading || this.fades > 42) && energy < 100) ||
     //   (energy < 170 && Math.random() < 0.03)
@@ -70,9 +75,9 @@ const threads = {
     this.layer.strokeWeight(1);
     this.layer.noFill();
 
-    // if (energy < 228) {
+    if (energy < 228) {
     this.instaFade(energy);
-    // }
+    }
 
     let repeats = Math.max((energy - 200) / 15, 1);
     while (repeats-- > 0) {
@@ -92,7 +97,7 @@ const threads = {
         if (Math.random() < 0.11) {
           this.layer.stroke(0, 0, 0, 2);
         } else {
-          const alpha = Math.ceil(energy / 36);
+          const alpha = Math.ceil(energy * energy / 30000);
           cell.color.setAlpha(alpha);
           this.layer.stroke(cell.color);
         }
@@ -160,6 +165,7 @@ const threads = {
           }
         }
         this.layer.pop();
+        this.lastEnergy = energy;
       });
     }
   },
